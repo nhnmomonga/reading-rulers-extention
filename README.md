@@ -1,3 +1,6 @@
+日本語版はこちら (Japanese version available here): [README.ja.md](./README.ja.md)
+
+---
 # Reading Ruler Chrome Extension
 
 ## Purpose
