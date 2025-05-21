@@ -1,0 +1,33 @@
+{
+  "extensionName": {
+    "message": "Reading Ruler",
+    "description": "The name of the extension."
+  },
+  "extensionDescription": {
+    "message": "Helps maintain focus on lines of text while reading.",
+    "description": "Description of the extension."
+  },
+  "actionTitle": {
+    "message": "Toggle Reading Ruler",
+    "description": "Tooltip for the browser action button."
+  },
+  "commandToggleRuler": {
+    "message": "Toggle Reading Ruler",
+    "description": "Action description for the keyboard shortcut to toggle the ruler."
+  },
+  "contextMenuToggleRuler": {
+    "message": "Toggle Reading Ruler on this page",
+    "description": "Context menu item text to toggle the ruler."
+  },
+  "optionsPageTitle": { "message": "Reading Ruler Options", "description": "The title of the options page." },
+  "optionsPageHeading": { "message": "Reading Ruler Options", "description": "Main heading on the options page." },
+  "optionsHeightLabel": { "message": "Height (px):", "description": "Label for ruler height input." },
+  "optionsColorLabel": { "message": "Base Color:", "description": "Label for ruler color input. Note: The subtask description says 'Color (RGB):', but the HTML has 'Base Color:'. I will use 'Base Color:' to match existing HTML and then update HTML if needed, or adjust if this was a specific change request for the text itself." },
+  "optionsOpacityLabel": { "message": "Opacity:", "description": "Label for ruler opacity input. Note: Subtask says 'Opacity (0-1):', HTML has 'Opacity:'. I will use 'Opacity:' for now." },
+  "optionsFocusModeLabel": { "message": "Enable Focus Mode (dims area outside ruler)", "description": "Label for focus mode checkbox." },
+  "optionsSaveButton": { "message": "Save Settings", "description": "Text for the save button on options page." },
+  "optionsStatusSaved": { "message": "Settings saved! Reload the page with the ruler active to see changes.", "description": "Status message when settings are saved." },
+  "optionsStatusErrorLoading": { "message": "Error loading settings.", "description": "Status message for error loading settings." },
+  "optionsStatusErrorSaving": { "message": "Error saving settings!", "description": "Status message for error saving settings." },
+  "optionsGlobalExplanation": { "message": "These settings are saved as global defaults. On any website, the first time you activate the ruler, these global defaults will be copied to create a profile for that specific site. Future changes to these global defaults will apply to new sites, but won't automatically update already created site-specific profiles.", "description": "Explanation of global vs site-specific settings." }
+}
