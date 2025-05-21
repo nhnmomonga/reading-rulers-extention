@@ -1,0 +1,33 @@
+{
+  "extensionName": {
+    "message": "読書定規",
+    "description": "拡張機能の名前。"
+  },
+  "extensionDescription": {
+    "message": "読書中の行位置の維持を助けます。",
+    "description": "拡張機能の説明。"
+  },
+  "actionTitle": {
+    "message": "読書定規の切り替え",
+    "description": "ブラウザアクションボタンのツールチップ。"
+  },
+  "commandToggleRuler": {
+    "message": "読書定規の表示を切り替える",
+    "description": "読書定規の表示を切り替えるキーボードショートカットのアクション説明。"
+  },
+  "contextMenuToggleRuler": {
+    "message": "このページで読書定規の表示を切り替える",
+    "description": "コンテキストメニュー項目：読書定規の表示を切り替える。"
+  },
+  "optionsPageTitle": { "message": "読書定規オプション", "description": "オプションページのタイトル。" },
+  "optionsPageHeading": { "message": "読書定規オプション", "description": "オプションページの主な見出し。" },
+  "optionsHeightLabel": { "message": "高さ (px):", "description": "定規の高さ入力のラベル。" },
+  "optionsColorLabel": { "message": "色 (RGB):", "description": "定規の色入力のラベル。" },
+  "optionsOpacityLabel": { "message": "不透明度 (0-1):", "description": "定規の不透明度入力のラベル。" },
+  "optionsFocusModeLabel": { "message": "フォーカスモードを有効にする（定規外の領域を暗くする）", "description": "フォーカスモードのチェックボックスのラベル。" },
+  "optionsSaveButton": { "message": "設定を保存", "description": "オプションページの保存ボタンのテキスト。" },
+  "optionsStatusSaved": { "message": "設定が保存されました！定規が有効なページを再読み込みして変更を確認してください。", "description": "設定が保存されたときのステータスメッセージ。" },
+  "optionsStatusErrorLoading": { "message": "設定の読み込みエラー。", "description": "設定読み込みエラーのステータスメッセージ。" },
+  "optionsStatusErrorSaving": { "message": "設定の保存エラー！", "description": "設定保存エラーのステータスメッセージ。" },
+  "optionsGlobalExplanation": { "message": "これらの設定はグローバルデフォルトとして保存されます。ウェブサイトで初めて定規を有効にすると、これらのグローバルデフォルトがコピーされてそのサイト専用のプロファイルが作成されます。これらのグローバルデフォルトに対する将来の変更は新しいサイトに適用されますが、既に作成されたサイト固有のプロファイルは自動的には更新されません。", "description": "グローバル設定とサイト固有設定の説明。" }
+}
