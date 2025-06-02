@@ -4,26 +4,53 @@ console.debug("Reading Ruler Content Script loaded."); // Changed from log to de
 // Global variables
 let isRulerActive = false;
 let rulerElement = null;
-let mouseYPosition = 50; 
+let mouseYPosition = 50;
 let focusTopOverlay = null;
 let focusBottomOverlay = null;
+const RULER_HEIGHT_MODE_KEY = 'rulerHeightMode';
+
+let currentFixedRulerHeight = parseInt(DEFAULT_RULER_SETTINGS.height);
 
 const DEFAULT_RULER_SETTINGS = {
-  height: '32px', 
-  color: 'rgba(0, 0, 255, 0.3)', 
-  focusModeEnabled: false 
+  height: '32px',
+  color: 'rgba(0, 0, 255, 0.3)',
+  focusModeEnabled: false,
+  rulerHeightMode: 'fixed'
 };
+let currentRulerHeightMode = DEFAULT_RULER_SETTINGS.rulerHeightMode; // Initialize with default
 
 // Listener to update mouse Y position
 document.addEventListener('mousemove', (event) => {
   mouseYPosition = event.clientY;
   if (isRulerActive && rulerElement) {
-    const rulerHeightNum = parseInt(rulerElement.style.height);
-    const newRulerTopNum = mouseYPosition - (rulerHeightNum / 2);
-    rulerElement.style.top = newRulerTopNum + 'px';
+    const fixedRulerHeightNum = currentFixedRulerHeight;
 
-    if (focusTopOverlay && focusBottomOverlay) { 
-      updateFocusOverlays(newRulerTopNum, rulerHeightNum);
+    if (currentRulerHeightMode === 'auto') {
+      const targetElement = document.elementFromPoint(event.clientX, event.clientY);
+      if (targetElement) {
+        const computedStyle = window.getComputedStyle(targetElement);
+        let newHeight = parseFloat(computedStyle.lineHeight);
+        if (isNaN(newHeight) || computedStyle.lineHeight === 'normal') {
+          newHeight = targetElement.getBoundingClientRect().height;
+        }
+        // Basic sanity checks for height
+        if (newHeight <= 0) newHeight = fixedRulerHeightNum > 0 ? fixedRulerHeightNum : 16; // Fallback to fixed or a small default
+        newHeight = Math.max(10, Math.min(newHeight, 200)); // Min 10px, Max 200px
+        rulerElement.style.height = newHeight + 'px';
+        const newRulerTopNum = event.clientY - (newHeight / 2);
+        rulerElement.style.top = newRulerTopNum + 'px';
+        if (focusTopOverlay && focusBottomOverlay) { updateFocusOverlays(newRulerTopNum, newHeight); }
+      } else { // No target element, maintain current height
+         const currentHeight = parseInt(rulerElement.style.height);
+         const newRulerTopNum = event.clientY - (currentHeight / 2);
+         rulerElement.style.top = newRulerTopNum + 'px';
+         if (focusTopOverlay && focusBottomOverlay) { updateFocusOverlays(newRulerTopNum, currentHeight); }
+      }
+    } else { // mode is 'fixed'
+      rulerElement.style.height = fixedRulerHeightNum + 'px';
+      const newRulerTopNum = event.clientY - (fixedRulerHeightNum / 2);
+      rulerElement.style.top = newRulerTopNum + 'px';
+      if (focusTopOverlay && focusBottomOverlay) { updateFocusOverlays(newRulerTopNum, fixedRulerHeightNum); }
     }
   }
 });
@@ -41,14 +68,16 @@ function createRuler() {
 
   const siteHeightKey = currentHostname + '_rulerHeight';
   const siteColorKey = currentHostname + '_rulerColor';
-  const siteFocusKey = currentHostname + '_focusModeEnabled'; 
+  const siteFocusKey = currentHostname + '_focusModeEnabled';
+  const siteModeKey = currentHostname + '_' + RULER_HEIGHT_MODE_KEY;
 
   const globalHeightKey = 'rulerHeight';
   const globalColorKey = 'rulerColor';
-  const globalFocusKey = 'focusModeEnabled'; 
+  const globalFocusKey = 'focusModeEnabled';
+  // RULER_HEIGHT_MODE_KEY is already global key
 
   chrome.storage.sync.get(
-    [siteHeightKey, siteColorKey, siteFocusKey, globalHeightKey, globalColorKey, globalFocusKey],
+    [siteHeightKey, siteColorKey, siteFocusKey, siteModeKey, globalHeightKey, globalColorKey, globalFocusKey, RULER_HEIGHT_MODE_KEY],
     (items) => {
       if (chrome.runtime.lastError) {
         console.error("Error getting ruler settings:", chrome.runtime.lastError.message);
@@ -67,25 +96,32 @@ function createRuler() {
       const siteHeight = items[siteHeightKey];
       const siteColor = items[siteColorKey];
       const siteFocus = items[siteFocusKey];
+      const siteMode = items[siteModeKey];
 
       const globalHeight = items[globalHeightKey];
       const globalColor = items[globalColorKey];
       const globalFocus = items[globalFocusKey];
+      const globalMode = items[RULER_HEIGHT_MODE_KEY];
 
+      currentRulerHeightMode = siteMode !== undefined ? siteMode : (globalMode !== undefined ? globalMode : DEFAULT_RULER_SETTINGS.rulerHeightMode);
       const appliedHeight = siteHeight || globalHeight || DEFAULT_RULER_SETTINGS.height;
+      currentFixedRulerHeight = parseInt(appliedHeight); // Store the determined fixed height
       const appliedColor = siteColor || globalColor || DEFAULT_RULER_SETTINGS.color;
       const focusEnabled = siteFocus !== undefined ? siteFocus :
                            (globalFocus !== undefined ? globalFocus :
                            DEFAULT_RULER_SETTINGS.focusModeEnabled);
       
-      console.debug(`Settings for ${currentHostname}: SiteH=${siteHeight}, SiteC=${siteColor}, SiteF=${siteFocus}, GlobalH=${globalHeight}, GlobalC=${globalColor}, GlobalF=${globalFocus}. Applied: H=${appliedHeight}, C=${appliedColor}, F=${focusEnabled}`); // Changed from log to debug
+      console.debug(`Settings for ${currentHostname}: SiteH=${siteHeight}, SiteC=${siteColor}, SiteF=${siteFocus}, SiteM=${siteMode}, GlobalH=${globalHeight}, GlobalC=${globalColor}, GlobalF=${globalFocus}, GlobalM=${globalMode}. Applied: H=${appliedHeight}, C=${appliedColor}, F=${focusEnabled}, M=${currentRulerHeightMode}`); // Changed from log to debug
+      console.debug(`Applied height mode: ${currentRulerHeightMode}`);
+      console.debug(`Current fixed ruler height set to: ${currentFixedRulerHeight}`);
 
       // Automatic profile creation
-      if (isRulerActive && (siteHeight === undefined || siteColor === undefined || siteFocus === undefined)) {
+      if (isRulerActive && (siteHeight === undefined || siteColor === undefined || siteFocus === undefined || siteMode === undefined)) {
         const newSiteProfile = {};
         if (siteHeight === undefined) newSiteProfile[siteHeightKey] = appliedHeight;
         if (siteColor === undefined) newSiteProfile[siteColorKey] = appliedColor;
         if (siteFocus === undefined) newSiteProfile[siteFocusKey] = focusEnabled;
+        if (siteMode === undefined) newSiteProfile[siteModeKey] = currentRulerHeightMode;
         
         if (Object.keys(newSiteProfile).length > 0) {
             chrome.storage.sync.set(newSiteProfile, () => {

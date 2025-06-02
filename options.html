@@ -40,7 +40,15 @@
   <div>
     <input type="checkbox" id="focusModeEnabled" name="focusModeEnabled">
     <!-- The label text will be set by options.js -->
-    <label for="focusModeEnabled"></label> 
+    <label for="focusModeEnabled"></label>
+  </div>
+
+  <div>
+    <label data-i18n="optionsRulerHeightModeLabel">Ruler Height Mode:</label>
+    <input type="radio" id="rulerHeightModeFixed" name="rulerHeightMode" value="fixed">
+    <label for="rulerHeightModeFixed" data-i18n="optionsHeightModeFixedLabel">Fixed</label>
+    <input type="radio" id="rulerHeightModeAuto" name="rulerHeightMode" value="auto">
+    <label for="rulerHeightModeAuto" data-i18n="optionsHeightModeAutoLabel">Auto-fit to line</label>
   </div>
 
   <button id="saveOptions"></button> <!-- Text will be set by options.js -->

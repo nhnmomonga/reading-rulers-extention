@@ -29,5 +29,8 @@
   "optionsStatusSaved": { "message": "Settings saved! Reload the page with the ruler active to see changes.", "description": "Status message when settings are saved." },
   "optionsStatusErrorLoading": { "message": "Error loading settings.", "description": "Status message for error loading settings." },
   "optionsStatusErrorSaving": { "message": "Error saving settings!", "description": "Status message for error saving settings." },
-  "optionsGlobalExplanation": { "message": "These settings are saved as global defaults. On any website, the first time you activate the ruler, these global defaults will be copied to create a profile for that specific site. Future changes to these global defaults will apply to new sites, but won't automatically update already created site-specific profiles.", "description": "Explanation of global vs site-specific settings." }
+  "optionsGlobalExplanation": { "message": "These settings are saved as global defaults. On any website, the first time you activate the ruler, these global defaults will be copied to create a profile for that specific site. Future changes to these global defaults will apply to new sites, but won't automatically update already created site-specific profiles.", "description": "Explanation of global vs site-specific settings." },
+  "optionsRulerHeightModeLabel": { "message": "Ruler Height Mode", "description": "Label for the ruler height mode selection." },
+  "optionsHeightModeFixedLabel": { "message": "Fixed", "description": "Label for the 'Fixed' height mode radio button." },
+  "optionsHeightModeAutoLabel": { "message": "Auto-fit to line", "description": "Label for the 'Auto-fit to line' height mode radio button." }
 }
