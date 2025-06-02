@@ -29,5 +29,8 @@
   "optionsStatusSaved": { "message": "設定が保存されました！定規が有効なページを再読み込みして変更を確認してください。", "description": "設定が保存されたときのステータスメッセージ。" },
   "optionsStatusErrorLoading": { "message": "設定の読み込みエラー。", "description": "設定読み込みエラーのステータスメッセージ。" },
   "optionsStatusErrorSaving": { "message": "設定の保存エラー！", "description": "設定保存エラーのステータスメッセージ。" },
-  "optionsGlobalExplanation": { "message": "これらの設定はグローバルデフォルトとして保存されます。ウェブサイトで初めて定規を有効にすると、これらのグローバルデフォルトがコピーされてそのサイト専用のプロファイルが作成されます。これらのグローバルデフォルトに対する将来の変更は新しいサイトに適用されますが、既に作成されたサイト固有のプロファイルは自動的には更新されません。", "description": "グローバル設定とサイト固有設定の説明。" }
+  "optionsGlobalExplanation": { "message": "これらの設定はグローバルデフォルトとして保存されます。ウェブサイトで初めて定規を有効にすると、これらのグローバルデフォルトがコピーされてそのサイト専用のプロファイルが作成されます。これらのグローバルデフォルトに対する将来の変更は新しいサイトに適用されますが、既に作成されたサイト固有のプロファイルは自動的には更新されません。", "description": "グローバル設定とサイト固有設定の説明。" },
+  "optionsRulerHeightModeLabel": { "message": "ルーラーの高さモード", "description": "ルーラーの高さモード選択のラベル。" },
+  "optionsHeightModeFixedLabel": { "message": "固定", "description": "「固定」高さモードのラジオボタンのラベル。" },
+  "optionsHeightModeAutoLabel": { "message": "行に自動フィット", "description": "「行に自動フィット」高さモードのラジオボタンのラベル。" }
 }
